@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gromacs-mcp"
+version = "0.1.0"
+description = "Model Context Protocol server that drives a local GROMACS installation — build, solvate, ionize, run simulations in the background, and analyse trajectories from any MCP client."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Ali Erkan Ocaklı", email = "alierkn.ocakli@gmail.com" }]
+keywords = [
+  "mcp", "model-context-protocol", "gromacs", "molecular-dynamics",
+  "computational-chemistry", "simulation", "llm", "claude",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Chemistry",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+  "mcp[cli]>=1.28.1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.6",
+  "pre-commit>=3.7",
+]
+
+[project.urls]
+Homepage = "https://github.com/Alierkn/gromacs-mcp"
+Repository = "https://github.com/Alierkn/gromacs-mcp"
+Issues = "https://github.com/Alierkn/gromacs-mcp/issues"
+Changelog = "https://github.com/Alierkn/gromacs-mcp/blob/main/CHANGELOG.md"
+
+[project.scripts]
+gromacs-mcp = "gromacs_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gromacs_mcp"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]  # long f-string Tcl/command templates are intentional
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

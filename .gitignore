@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+wheels/
+.venv/
+venv/
+
+# Tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Runtime data (simulation projects & job registry)
+projects/
+.jobs.json
+
+# GROMACS artefacts (in case any land in-tree)
+*.trr
+*.xtc
+*.edr
+*.cpt
+*.tpr
+\#*\#
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# claude-mem auto-generated context (not part of the package)
+CLAUDE.md
+**/CLAUDE.md

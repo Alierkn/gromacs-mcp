@@ -1,0 +1,15 @@
+; em.mdp — steepest-descent energy minimisation
+integrator      = steep
+nsteps          = 5000
+emtol           = 1000.0     ; stop when max force < 1000 kJ/mol/nm
+emstep          = 0.01
+
+; neighbour searching
+cutoff-scheme   = Verlet
+nstlist         = 10
+pbc             = xyz
+
+; electrostatics / van der Waals
+coulombtype     = PME
+rcoulomb        = 1.0
+rvdw            = 1.0

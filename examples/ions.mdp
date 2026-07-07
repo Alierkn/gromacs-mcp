@@ -1,0 +1,9 @@
+; ions.mdp — minimal input just to build a .tpr for genion
+integrator      = steep
+nsteps          = 1
+cutoff-scheme   = Verlet
+nstlist         = 10
+pbc             = xyz
+coulombtype     = PME
+rcoulomb        = 1.0
+rvdw            = 1.0
