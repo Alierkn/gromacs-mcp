@@ -33,9 +33,16 @@ publish to PyPI.
 
 ## PyPI Trusted Publishing
 
-PyPI must be configured with a Trusted Publisher:
+PyPI must be configured with a Trusted Publisher before publishing a GitHub
+release. For the first upload, when the PyPI project does not exist yet, create
+a pending publisher from the PyPI account publishing settings; PyPI will create
+the project on the first successful trusted publish.
 
 - Owner/repo: `Alierkn/gromacs-mcp`
+- Project name: `gromacs-mcp`
 - Workflow: `release.yml`
 - Environment: `pypi`
 - Tag pattern: optional, recommended as `v*`
+
+Do not publish the GitHub release until this PyPI publisher exists. Otherwise
+the `publish` job will build correctly but fail at the PyPI upload step.
