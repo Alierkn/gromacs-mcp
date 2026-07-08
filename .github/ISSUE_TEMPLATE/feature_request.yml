@@ -1,0 +1,20 @@
+name: ✨ Feature request
+description: Suggest a new tool or improvement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the workflow you wish gromacs-mcp supported.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Which `gmx` command(s) or tool would this map to?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

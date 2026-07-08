@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions & discussion
+    url: https://github.com/Alierkn/gromacs-mcp/discussions
+    about: Ask usage questions or share what you built.
+  - name: 🔬 Companion — vmd-mcp
+    url: https://github.com/Alierkn/vmd-mcp
+    about: Analyse & visualise your GROMACS results with VMD.

@@ -1,0 +1,46 @@
+name: 🐛 Bug report
+description: Report a problem with gromacs-mcp
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: A clear description of the bug, including the tool call and the full result you got back.
+      placeholder: I called `mdrun_start` with … and got …
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: input
+    id: gmx-version
+    attributes:
+      label: GROMACS version
+      description: Output of `gmx --version` (first line).
+      placeholder: "GROMACS version: 2026.2"
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS / platform
+      placeholder: macOS 26.5 (arm64)
+    validations:
+      required: true
+  - type: input
+    id: client
+    attributes:
+      label: MCP client
+      placeholder: Claude Code 2.1.x / Claude Desktop
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant logs
+      render: shell

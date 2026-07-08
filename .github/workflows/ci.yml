@@ -6,6 +6,13 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
@@ -24,8 +31,11 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
 
+      - name: Verify lockfile
+        run: uv lock --check
+
       - name: Install project (dev extras)
-        run: uv sync --extra dev --python ${{ matrix.python-version }}
+        run: uv sync --locked --extra dev --python ${{ matrix.python-version }}
 
       - name: Ruff (lint)
         run: uv run ruff check .
@@ -33,6 +43,60 @@ jobs:
       - name: Ruff (format check)
         run: uv run ruff format --check .
 
-      - name: Pytest
-        run: uv run pytest
+      - name: Mypy (type check)
+        run: uv run mypy
+
+      - name: Pytest (+ coverage)
+        run: uv run pytest --cov --cov-report=term-missing
         # gmx-dependent tests self-skip when GROMACS is absent (as on CI).
+
+  integration-gromacs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GROMACS
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gromacs
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Verify lockfile
+        run: uv lock --check
+
+      - name: Install project (dev extras)
+        run: uv sync --locked --extra dev --python 3.12
+
+      - name: GROMACS integration smoke test
+        env:
+          RUN_GROMACS_INTEGRATION: "1"
+        run: uv run pytest -m integration
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Verify lockfile
+        run: uv lock --check
+
+      - name: Build package
+        run: uv build
+
+      - name: Check package metadata
+        run: uvx twine check dist/*
