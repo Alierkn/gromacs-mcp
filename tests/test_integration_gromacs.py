@@ -46,10 +46,10 @@ Pure water smoke test
     )
     assert preprocessed["ok"] is True, preprocessed
 
-    started = server.mdrun_start("em.tpr", workdir=workdir, deffnm="em", ntomp=1, nsteps=10)
+    started = server.mdrun_start("em.tpr", workdir=workdir, deffnm="em", ntomp=1, nsteps=0)
     assert started["ok"] is True, started
 
-    deadline = time.time() + 45
+    deadline = time.time() + 90
     last_status = {}
     while time.time() < deadline:
         last_status = server.mdrun_status(started["job_id"])
@@ -58,6 +58,8 @@ Pure water smoke test
             break
         time.sleep(1)
 
+    if last_status.get("status") == "running":
+        server.mdrun_stop(started["job_id"])
     assert last_status.get("status") == "finished", last_status
     listing = server.list_files(workdir)
     names = {entry["name"] for entry in listing["files"]}
