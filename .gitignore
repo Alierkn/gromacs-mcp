@@ -13,10 +13,12 @@ venv/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.coverage
 
 # Runtime data (simulation projects & job registry)
 projects/
 .jobs.json
+.jobs.lock
 
 # GROMACS artefacts (in case any land in-tree)
 *.trr

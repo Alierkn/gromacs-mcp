@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "gromacs-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "Model Context Protocol server that drives a local GROMACS installation — build, solvate, ionize, run simulations in the background, and analyse trajectories from any MCP client."
 readme = "README.md"
 license = "MIT"
@@ -29,12 +29,15 @@ classifiers = [
 ]
 dependencies = [
   "mcp[cli]>=1.28.1",
+  "pydantic>=2.0",
 ]
 
 [project.optional-dependencies]
 dev = [
   "pytest>=8.0",
+  "pytest-cov>=5.0",
   "ruff>=0.6",
+  "mypy>=1.11",
   "pre-commit>=3.7",
 ]
 
@@ -62,3 +65,22 @@ ignore = ["E501"]  # long f-string Tcl/command templates are intentional
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
+markers = [
+  "integration: tests that invoke a real GROMACS workflow",
+]
+
+[tool.coverage.run]
+source = ["gromacs_mcp"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.mypy]
+python_version = "3.10"
+files = ["src"]
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+no_implicit_optional = true
